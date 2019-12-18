@@ -22,6 +22,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "csv-es": "^1.0.5",
     "semistandard": "^14.2.0"
   }
 }
