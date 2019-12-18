@@ -1,0 +1,14 @@
+{
+  "name": "@vanillawc/wc-csv-table",
+  "authors": [
+    "Evan Plaice <evanplaice@gmail.com> (http://evanplaice.com/)"
+  ],
+  "keywords": [
+    "web-components",
+    "vanilla",
+    "csv",
+    "table"
+  ],
+  "license": "MIT",
+  "dependencies": {}
+}
