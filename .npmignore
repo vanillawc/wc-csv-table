@@ -1,0 +1,5 @@
+.config/
+.github/
+demo/
+dev/
+*.tgz
