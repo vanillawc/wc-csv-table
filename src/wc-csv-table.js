@@ -6,13 +6,6 @@ export class WCCSVTable extends HTMLElement {
     return ['src'];
   }
 
-  attributeChangedCallback (name, oldValue, newValue) {
-    if (!this.__initialized) { return; }
-    if (oldValue !== newValue) {
-      this[name] = newValue;
-    }
-  }
-
   get src () { return this.getAttribute('src'); }
   set src (value) {
     this.setAttribute('src', value);
@@ -22,6 +15,13 @@ export class WCCSVTable extends HTMLElement {
   get value () { return this.__data; }
   set value (value) {
     this.setValue(value);
+  }
+
+  attributeChangedCallback (name, oldValue, newValue) {
+    if (!this.__initialized) { return; }
+    if (oldValue !== newValue) {
+      this[name] = newValue;
+    }
   }
 
   constructor () {
@@ -66,7 +66,6 @@ export class WCCSVTable extends HTMLElement {
     const data = [...this.__data];
     const table = document.createElement('table');
 
-    // build the headers row
     const thead = document.createElement('thead');
     const headers = data.shift();
     headers.forEach(header => {
@@ -76,7 +75,6 @@ export class WCCSVTable extends HTMLElement {
     });
     table.appendChild(thead);
 
-    // build the data rows
     data.forEach(row => {
       const tr = document.createElement('tr');
       row.forEach(cell => {
