@@ -173,6 +173,13 @@ class WCCSVTable extends HTMLElement {
     return ['src'];
   }
 
+  attributeChangedCallback (name, oldValue, newValue) {
+    if (!this.__initialized) { return; }
+    if (oldValue !== newValue) {
+      this[name] = newValue;
+    }
+  }
+
   get src () { return this.getAttribute('src'); }
   set src (value) {
     this.setAttribute('src', value);
@@ -184,25 +191,15 @@ class WCCSVTable extends HTMLElement {
     this.setValue(value);
   }
 
-  attributeChangedCallback (name, oldValue, newValue) {
-    if (!this.__initialized) { return; }
-    if (oldValue !== newValue) {
-      this[name] = newValue;
-    }
-  }
-
   constructor () {
     super();
     this.__initialized = false;
-    this.__data = null;
-    this.__table = null;
-  }
-
-  async connectedCallback () {
     this.__data = [];
     this.__table = document.createElement('table');
     this.appendChild(this.__table);
+  }
 
+  async connectedCallback () {
     if (this.hasAttribute('src')) {
       this.setSrc();
     }
@@ -233,15 +230,19 @@ class WCCSVTable extends HTMLElement {
     const data = [...this.__data];
     const table = document.createElement('table');
 
-    const thead = document.createElement('thead');
     const headers = data.shift();
+    const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
+
     headers.forEach(header => {
       const th = document.createElement('th');
       th.innerText = header;
-      thead.appendChild(th);
+      tr.appendChild(th);
     });
+    thead.append(tr);
     table.appendChild(thead);
 
+    const tbody = document.createElement('tbody');
     data.forEach(row => {
       const tr = document.createElement('tr');
       row.forEach(cell => {
@@ -249,8 +250,9 @@ class WCCSVTable extends HTMLElement {
         td.innerText = cell;
         tr.appendChild(td);
       });
-      table.appendChild(tr);
+      tbody.appendChild(tr);
     });
+    table.appendChild(tbody);
 
     this.removeChild(this.__table);
     this.__table = table;
