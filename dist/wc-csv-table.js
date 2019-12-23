@@ -170,13 +170,17 @@ class CSV {
 
 class WCCSVTable extends HTMLElement {
   static get observedAttributes () {
-    return ['src'];
+    return ['src', 'no-headers'];
   }
 
   attributeChangedCallback (name, oldValue, newValue) {
     if (!this.__initialized) { return; }
     if (oldValue !== newValue) {
-      this[name] = newValue;
+      if (name === 'no-headers') {
+        this.noHeaders = newValue;
+      } else {
+        this[name] = newValue;
+      }
     }
   }
 
@@ -191,15 +195,31 @@ class WCCSVTable extends HTMLElement {
     this.setValue(value);
   }
 
+  get noHeaders () { return this.hasAttribute('no-headers'); }
+  set noHeaders (value) {
+    const noHeaders = this.hasAttribute('no-headers');
+    if (noHeaders) {
+      this.setAttribute('no-headers', '');
+    } else {
+      this.removeAttribute('no-headers');
+    }
+    this.setNoHeaders(noHeaders);
+  }
+
   constructor () {
     super();
     this.__initialized = false;
+    this.__headers = true;
     this.__data = [];
     this.__table = document.createElement('table');
     this.appendChild(this.__table);
   }
 
   async connectedCallback () {
+    if (this.hasAttribute('no-headers')) {
+      this.__headers = false;
+    }
+
     if (this.hasAttribute('src')) {
       this.setSrc();
     }
@@ -226,21 +246,27 @@ class WCCSVTable extends HTMLElement {
     this.render();
   }
 
+  setNoHeaders (noHeaders) {
+    this.__headers = !noHeaders;
+    this.render();
+  }
+
   render () {
     const data = [...this.__data];
     const table = document.createElement('table');
 
-    const headers = data.shift();
-    const thead = document.createElement('thead');
-    const tr = document.createElement('tr');
-
-    headers.forEach(header => {
-      const th = document.createElement('th');
-      th.innerText = header;
-      tr.appendChild(th);
-    });
-    thead.append(tr);
-    table.appendChild(thead);
+    if (this.__headers) {
+      const headers = data.shift();
+      const thead = document.createElement('thead');
+      const tr = document.createElement('tr');
+      headers.forEach(header => {
+        const th = document.createElement('th');
+        th.innerText = header;
+        tr.appendChild(th);
+      });
+      thead.append(tr);
+      table.appendChild(thead);
+    }
 
     const tbody = document.createElement('tbody');
     data.forEach(row => {

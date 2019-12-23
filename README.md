@@ -27,20 +27,30 @@ Then import the `index.js` file at the root of the package.
 **Attributes**
 
 - `src` - load an external CSV file
+- `no-headers` - there is no header row
 
 **Properties**
 
 - `value` - get/set the editor's contents
+- `noHeaders` - `no-headers` as a property
 
 ### Basic Usage
 
 ```html
 <wc-csv-table src="sample.csv"></wc-csv-table>
 ```
-***Demo: [Basic Usage - Demo][]***
+***Demo: [Basic Usage - Basic Usage][]***
+
+### 'no-headers' Attribute
+
+```html
+<wc-csv-table src="sample2.csv" no-headers></wc-csv-table>
+```
+***Demo: [Basic Usage - 'no-headers' Attribute][]***
 
 ## Styling
 
 By default, `<wc-csv-table>` contains an un-styled `<table>` element in the lightDOM. That means, it will inherit any global CSS styles present on the site and can be styled directly using CSS.
 
-[Basic Usage - Demo]: https://vanillawc.github.io/wc-csv-table/demo/index.html
+[Basic Usage - Basic Usage]: https://vanillawc.github.io/wc-csv-table/demo/basic-usage.html
+[Basic Usage - 'no-headers' Attribute]: https://vanillawc.github.io/wc-csv-table/demo/no-headers-attribute.html
