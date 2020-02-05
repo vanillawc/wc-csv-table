@@ -3,20 +3,18 @@ class CSV {
    * Takes a string of CSV data and converts it to a 2 dimensional array
    *
    * options
-   * - typed - type coercion [false]
+   * - typed - infer types [false]
    *
    * @static
-   * @param {*} csv the CSV string to parse
-   * @param {*} [options] an object containing the options
-   * @param {*} [reviver] a custom function to modify the values
-   * @returns a 2 dimensional array of `[entries][values]`
+   * @param {string} csv the CSV string to parse
+   * @param {Object} [options] an object containing the options
+   * @param {Function} [reviver] a custom function to modify the values
+   * @returns {Array} a 2 dimensional array of `[entries][values]`
    */
-  static parse (csv, options = {}, reviver = v => v) {
-    // TODO: Add input checking
-    let matches = [];
-    let match = '';
-    let state = 0;
+  static parse (csv, options, reviver = v => v) {
     const ctx = Object.create(null);
+    ctx.options = options || {};
+    ctx.reviver = reviver;
     ctx.value = '';
     ctx.entry = [];
     ctx.output = [];
@@ -24,6 +22,10 @@ class CSV {
     ctx.row = 1;
 
     const lexer = RegExp(/"|,|\r\n|\n|\r|[^",\r\n]+/y);
+
+    let matches = [];
+    let match = '';
+    let state = 0;
 
     while ((matches = lexer.exec(csv)) !== null) {
       match = matches[0];
@@ -111,48 +113,55 @@ class CSV {
    * Takes a 2 dimensional array of `[entries][values]` and converts them to CSV
    *
    * options
-   * - eof - add a trailing newline at the end [true]
+   * - eof - add a trailing newline at the end of file [true]
    *
    * @static
-   * @param {*} array the input array to stringify
-   * @param {*} [options] an object containing the options
-   * @param {*} [replacer] a custom function to modify the values
-   * @returns the CSV string
+   * @param {Array} array the input array to stringify
+   * @param {Object} [options] an object containing the options
+   * @param {Function} [replacer] a custom function to modify the values
+   * @returns {string} the CSV string
    */
   static stringify (array, options = {}, replacer = v => v) {
-    // TODO: Add input checking
+    const ctx = Object.create(null);
+    ctx.options = options;
+    ctx.options.eof = ctx.options.eof !== undefined ? ctx.options.eof : true;
+    ctx.row = 1;
+    ctx.col = 1;
+    ctx.output = '';
 
-    options.eof = options.eof !== undefined
-      ? options.eof
-      : true;
-
-    let output = '';
     array.forEach((row, rIdx) => {
       let entry = '';
+      ctx.col = 1;
       row.forEach((col, cIdx) => {
-        col = col.replace('"', '""');
-        entry += /"|,|\r\n|\n|\r/.test(col)
-          ? `"${col}"`
-          : col;
+        if (typeof col === 'string') {
+          col = col.replace('"', '""');
+          col = /"|,|\r\n|\n|\r/.test(col) ? `"${col}"` : col;
+        }
+        entry += replacer(col, ctx.row, ctx.col);
         if (cIdx !== row.length - 1) {
           entry += ',';
         }
+        ctx.col++;
       });
-      if (options.eof === false) {
-        output += entry;
-        if (rIdx !== array.length - 1) {
-          output += '\n';
-        }
-      } else {
-        output += `${entry}\n`;
+      switch (true) {
+        case ctx.options.eof:
+        case !ctx.options.eof && rIdx !== array.length - 1:
+          ctx.output += `${entry}\n`;
+          break;
+        default:
+          ctx.output += `${entry}`;
+          break;
       }
+      ctx.row++;
     });
-    return output;
+
+    return ctx.output;
   }
 
   /** @private */
   static valueEnd (ctx) {
-    ctx.entry.push(ctx.value);
+    const value = ctx.options.typed ? this.inferType(ctx.value) : ctx.value;
+    ctx.entry.push(ctx.reviver(value, ctx.row, ctx.col));
     ctx.value = '';
     ctx.col++;
   }
@@ -163,6 +172,21 @@ class CSV {
     ctx.entry = [];
     ctx.row++;
     ctx.col = 1;
+  }
+
+  /** @private */
+  static inferType (value) {
+    switch (true) {
+      case value === 'true':
+      case value === 'false':
+        return value === 'true';
+      case /.\./.test(value):
+        return parseFloat(value);
+      case isFinite(value):
+        return parseInt(value);
+      default:
+        return value;
+    }
   }
 }
 
