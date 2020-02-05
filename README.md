@@ -1,14 +1,12 @@
-[![GitHub Releases](https://img.shields.io/github/v/release/vanillawc/wc-csv-table.svg)](https://github.com/vanillawc/wc-csv-table/releases)
+[![GitHub Releases](https://badgen.net/github/tag/vanillawc/wc-csv-table)](https://github.com/vanillawc/wc-csv-table/releases)
 [![NPM Release](https://badgen.net/npm/v/@vanillawc/wc-csv-table)](https://www.npmjs.com/package/@vanillawc/wc-csv-table)
-[![Downloads](https://badgen.net/npm/dt/@vanillawc/wc-csv-table)](https://www.npmjs.com/package/@vanillawc/wc-csv-table)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vanillawc/wc-csv-table/master/LICENSE)
+[![Bundlephobia](https://badgen.net/bundlephobia/minzip/@vanillawc/wc-csv-table)](https://bundlephobia.com/result?p=@vanillawc/wc-csv-table)
+[![MIT License](https://badgen.net/github/license/vanillawc/wc-csv-table)](https://raw.githubusercontent.com/vanillawc/wc-csv-table/master/LICENSE)
 [![Published on WebComponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vanillawc/wc-csv-table)
 [![Latest Status](https://github.com/vanillawc/wc-csv-table/workflows/Latest/badge.svg)](https://github.com/vanillawc/wc-csv-table/actions)
 [![Release Status](https://github.com/vanillawc/wc-csv-table/workflows/Release/badge.svg)](https://github.com/vanillawc/wc-csv-table/actions)
 
 A display CSV (Comma Separated Values) as a table
-
- <!-- TODO: Add video graphic here -->
 
 -----
 
