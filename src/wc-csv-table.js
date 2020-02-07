@@ -1,5 +1,5 @@
 /* eslint no-undef: 0 */
-import CSV from '../node_modules/csv-es/index.js';
+import { parse } from '../node_modules/csv-es/index.js';
 
 export class WCCSVTable extends HTMLElement {
   static get observedAttributes () {
@@ -63,7 +63,7 @@ export class WCCSVTable extends HTMLElement {
   async setSrc () {
     if (this.hasAttribute('src')) {
       const rawCSV = await this.fetchSrc(this.src);
-      this.__data = CSV.parse(rawCSV);
+      this.__data = parse(rawCSV);
       this.render();
     }
   }
@@ -75,7 +75,7 @@ export class WCCSVTable extends HTMLElement {
   }
 
   setValue (value) {
-    this.__data = CSV.parse(value);
+    this.__data = parse(value);
     this.render();
   }
 
