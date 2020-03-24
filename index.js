@@ -20,7 +20,8 @@ function parse (csv, options, reviver = v => v) {
   ctx.col = 1;
   ctx.row = 1;
 
-  const lexer = RegExp(/"|,|\r\n|\n|\r|[^",\r\n]+/y);
+  const lexer = new RegExp(/"|,|\r\n|\n|\r|[^",\r\n]+/y);
+  const isNewline = new RegExp(/^(\r\n|\n|\r)$/);
 
   let matches = [];
   let match = '';
@@ -39,7 +40,7 @@ function parse (csv, options, reviver = v => v) {
             state = 0;
             valueEnd(ctx);
             break;
-          case /^(\r\n|\n|\r)$/.test(match):
+          case isNewline.test(match):
             state = 0;
             valueEnd(ctx);
             entryEnd(ctx);
@@ -56,7 +57,7 @@ function parse (csv, options, reviver = v => v) {
             state = 0;
             valueEnd(ctx);
             break;
-          case /^(\r\n|\n|\r)$/.test(match):
+          case isNewline.test(match):
             state = 0;
             valueEnd(ctx);
             entryEnd(ctx);
@@ -87,7 +88,7 @@ function parse (csv, options, reviver = v => v) {
             state = 0;
             valueEnd(ctx);
             break;
-          case /^(\r\n|\n|\r)$/.test(match):
+          case isNewline.test(match):
             state = 0;
             valueEnd(ctx);
             entryEnd(ctx);
@@ -126,11 +127,13 @@ function entryEnd (ctx) {
 
 /** @private */
 function inferType (value) {
+  const isNumber = new RegExp(/.\./);
+
   switch (true) {
     case value === 'true':
     case value === 'false':
       return value === 'true';
-    case /.\./.test(value):
+    case isNumber.test(value):
       return parseFloat(value);
     case isFinite(value):
       return parseInt(value);
