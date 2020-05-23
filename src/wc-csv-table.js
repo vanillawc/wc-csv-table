@@ -1,5 +1,5 @@
 /* eslint no-undef: 0 */
-import { parse } from '../node_modules/csv-es/index.js';
+import { parse } from '../node_modules/@vanillaes/csv/index.js';
 
 export class WCCSVTable extends HTMLElement {
   static get observedAttributes () {
