@@ -1,24 +1,35 @@
-[![GitHub Releases](https://badgen.net/github/tag/vanillawc/wc-csv-table)](https://github.com/vanillawc/wc-csv-table/releases)
-[![NPM Release](https://badgen.net/npm/v/@vanillawc/wc-csv-table)](https://www.npmjs.com/package/@vanillawc/wc-csv-table)
-[![Bundlephobia](https://badgen.net/bundlephobia/minzip/@vanillawc/wc-csv-table)](https://bundlephobia.com/result?p=@vanillawc/wc-csv-table)
-[![MIT License](https://badgen.net/github/license/vanillawc/wc-csv-table)](https://raw.githubusercontent.com/vanillawc/wc-csv-table/master/LICENSE)
-[![Published on WebComponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vanillawc/wc-csv-table)
-[![Latest Status](https://github.com/vanillawc/wc-csv-table/workflows/Latest/badge.svg)](https://github.com/vanillawc/wc-csv-table/actions)
-[![Release Status](https://github.com/vanillawc/wc-csv-table/workflows/Release/badge.svg)](https://github.com/vanillawc/wc-csv-table/actions)
+<h1 align="center">&lt;wc-csv-table&gt;: CSV -> HTML Table</h1>
 
-A display CSV (Comma Separated Values) as a table
-
------
+<div align="center">
+  <a href="https://github.com/vanillawc/wc-csv-table/releases"><img src="https://badgen.net/github/tag/vanillawc/wc-csv-table" alt="GitHub Releases"></a>
+  <a href="https://www.npmjs.com/package/@vanillawc/wc-csv-table"><img src="https://badgen.net/npm/v/@vanillawc/wc-csv-table" alt="NPM Releases"></a>
+  <a href="https://bundlephobia.com/result?p=@vanillawc/wc-csv-table"><img src="https://badgen.net/bundlephobia/minzip/@vanillawc/wc-csv-table" alt="Bundlephobia"></a>
+  <a href="https://raw.githubusercontent.com/vanillawc/wc-csv-table/master/LICENSE"><img src="https://badgen.net/github/license/vanillawc/wc-csv-table" alt="MIT License"></a>
+  <a href="https://www.webcomponents.org/element/vanillawc/wc-csv-table"><img src="https://img.shields.io/badge/webcomponents.org-published-blue.svg" alt="Published on WebComponents.org"></a>
+  <a href="https://github.com/vanillawc/wc-csv-table/actions"><img src="https://github.com/vanillawc/wc-csv-table/workflows/Latest/badge.svg" alt="Latest Status"></a>
+  <a href="https://github.com/vanillawc/wc-csv-table/actions"><img src="https://github.com/vanillawc/wc-csv-table/workflows/Release/badge.svg" alt="Release Status"></a>
+</div>
 
 ## Installation
 
+*Installation*
 ```sh
 npm i @vanillawc/wc-csv-table
 ```
 
-Then import the `index.js` file at the root of the package.
+*Import from NPM*
+```html
+<script type="module" src="node_modules/@vanillawc/wc-csv-table/index.js"></script>
+```
 
------
+*Import from CDN*
+```html
+<script type="module" src="https://cdn.jsdelivr.net/gh/vanillawc/wc-csv-table/index.js"></script>
+```
+
+## Demo
+
+Try it on [WebComponents.dev](https://webcomponents.dev/edit/e9ymso9FS3XKUVomG90u?sv=1&pm=1)
 
 ## Usage
 
@@ -40,6 +51,8 @@ Then import the `index.js` file at the root of the package.
 
 ### 'no-headers' Attribute
 
+Use `no-headers` if your data doesn't contain row headers
+
 ```html
 <wc-csv-table src="sample2.csv" no-headers></wc-csv-table>
 ```
@@ -47,9 +60,3 @@ Then import the `index.js` file at the root of the package.
 ## Styling
 
 By default, `<wc-csv-table>` contains an un-styled `<table>` element in the lightDOM. That means, it will inherit any global CSS styles present on the site and can be styled directly using CSS.
-
------
-
-## Demo
-
-### [WC-CSV-Table - WebComponents.dev](https://webcomponents.dev/edit/e9ymso9FS3XKUVomG90u?sv=1&pm=1)
