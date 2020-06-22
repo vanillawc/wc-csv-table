@@ -146,11 +146,11 @@ function inferType (value) {
 
 class WCCSVTable extends HTMLElement {
   static get observedAttributes () {
-    return ['src', 'no-headers'];
+    return ['src', 'no-headers']
   }
 
   attributeChangedCallback (name, oldValue, newValue) {
-    if (!this.__initialized) { return; }
+    if (!this.__initialized) { return }
     if (oldValue !== newValue) {
       if (name === 'no-headers') {
         this.noHeaders = newValue;
@@ -160,18 +160,18 @@ class WCCSVTable extends HTMLElement {
     }
   }
 
-  get src () { return this.getAttribute('src'); }
+  get src () { return this.getAttribute('src') }
   set src (value) {
     this.setAttribute('src', value);
     this.setSrc(value);
   }
 
-  get value () { return this.__data; }
+  get value () { return this.__data }
   set value (value) {
     this.setValue(value);
   }
 
-  get noHeaders () { return this.hasAttribute('no-headers'); }
+  get noHeaders () { return this.hasAttribute('no-headers') }
   set noHeaders (value) {
     const noHeaders = this.hasAttribute('no-headers');
     if (noHeaders) {
@@ -213,8 +213,8 @@ class WCCSVTable extends HTMLElement {
 
   async fetchSrc (src) {
     const response = await fetch(src);
-    if (response.status !== 200) throw Error(`ERR ${response.status}: ${response.statusText}`);
-    return response.text();
+    if (response.status !== 200) throw Error(`ERR ${response.status}: ${response.statusText}`)
+    return response.text()
   }
 
   setValue (value) {
