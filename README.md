@@ -1,4 +1,4 @@
-<h1 align="center">&lt;wc-csv-table&gt;: CSV -> HTML Table</h1>
+<h1 align="center">&lt;wc-csv-table&gt; CSV -> HTML Table</h1>
 
 <div align="center">
   <a href="https://github.com/vanillawc/wc-csv-table/releases"><img src="https://badgen.net/github/tag/vanillawc/wc-csv-table" alt="GitHub Releases"></a>
