@@ -1,5 +1,18 @@
+var __defProp = Object.defineProperty;
+var __markAsModule = (target) => __defProp(target, "__esModule", {value: true});
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, {get: all[name], enumerable: true});
+};
+
+// src/wc-csv-table.js
+__markAsModule(exports);
+__export(exports, {
+  WCCSVTable: () => WCCSVTable
+});
+
 // node_modules/@vanillaes/csv/index.js
-function parse(csv2, options, reviver = (v) => v) {
+function parse(csv, options, reviver = (v) => v) {
   const ctx = Object.create(null);
   ctx.options = options || {};
   ctx.reviver = reviver;
@@ -8,12 +21,12 @@ function parse(csv2, options, reviver = (v) => v) {
   ctx.output = [];
   ctx.col = 1;
   ctx.row = 1;
-  const lexer = new RegExp(/"|,|\r\n|\n|\r|[^",\r\n]+/y);
-  const isNewline = new RegExp(/^(\r\n|\n|\r)$/);
+  const lexer = /"|,|\r\n|\n|\r|[^",\r\n]+/y;
+  const isNewline = /^(\r\n|\n|\r)$/;
   let matches = [];
   let match = "";
   let state = 0;
-  while ((matches = lexer.exec(csv2)) !== null) {
+  while ((matches = lexer.exec(csv)) !== null) {
     match = matches[0];
     switch (state) {
       case 0:
@@ -103,7 +116,7 @@ function entryEnd(ctx) {
   ctx.col = 1;
 }
 function inferType(value) {
-  const isNumber = new RegExp(/.\./);
+  const isNumber = /.\./;
   switch (true) {
     case value === "true":
     case value === "false":
@@ -118,7 +131,7 @@ function inferType(value) {
 }
 
 // src/wc-csv-table.js
-class WCCSVTable extends HTMLElement {
+var WCCSVTable = class extends HTMLElement {
   static get observedAttributes() {
     return ["src", "no-headers"];
   }
@@ -227,8 +240,5 @@ class WCCSVTable extends HTMLElement {
     this.__table = table;
     this.appendChild(this.__table);
   }
-}
-customElements.define("wc-csv-table", WCCSVTable);
-export {
-  WCCSVTable
 };
+customElements.define("wc-csv-table", WCCSVTable);
